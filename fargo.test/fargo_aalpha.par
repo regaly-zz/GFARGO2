@@ -1,0 +1,73 @@
+###-----------------------------------------------------------------------------------------------------------------------------------
+### Adaptive alpha viscosity test parameter file for GFARGO2
+###
+### Written by Zs. Regaly, 2017
+###-----------------------------------------------------------------------------------------------------------------------------------
+
+### Disk parameters
+AspectRatio         0.05                      Thickness over Radius in the disc
+Sigma0              6.46971e-05               Surface density at r=1 (corresponding to 0.01 solar mass)
+DensityFloor        1e-10                     Density can not go below this value
+#Viscosity          1e-5                      Uniform kinematic viscosity
+AlphaViscosity      5e-3                      Shakura & Sunyaev alpha  viscosity
+SigmaSlope          1.0                       Slope of surface density profile (Sigma~r^-SigmaSlope)
+FlaringIndex        0                         Flaring index of the disk (0 for flat disk approximation)
+ExcludeHill         NO                        Exclude torque of material inside planetary Hill sphere (chhose: NO, GAUSSIAN, HEAVISIDE)
+SelfGravity         NO                        Calculate gas disk self-gravity
+Adiabatic           NO                        Adiabatic gas (Energy equation is also solved)
+#AdiabaticIndex      1.4                       Adiabatic index of gas
+#CoolingTime         0                         Beta cooling time
+
+### Planet parameters
+PlanetConfig        ./planets.cfg             Planetary initialization file
+ThicknessSmoothing  0.6                       Smoothing parameters in disk thickness
+#RocheSmoothing      0.6                       Smoothing parameters in ???
+MassTaper           3.1400230946342198        Mass taper of planet(s) in orbital ti``mescale at 1
+
+### Numerical method parameters
+Transport           FARGO                     choose: FARGO or STANDARD
+InnerBoundary       OPEN                      choose: OPEN, RIGID, NONREFLECTING, STRONGDAMPING or WEAKDAMPING
+OuterBoundary       OPEN                      choose: OPEN, RIGID, NONREFLECTING, STRONGDAMPING or WEAKDAMPING
+Disk                YES                       Whether calculate disk at all
+OmegaFrame          0                         Constant frame rotation
+Frame               COROTATING                choose: COROTATING or FIXED (must be FIXED for HIPERION)
+IndirectTerm        YES                       Take into account the indirect potential of the disk
+DampRmin            1.05                      Damping inner radius is DampRmin*Rin (STRONGDAMPING, WEAKDAMPING)
+DampRmax            0.95                      Damping outer radius is DampRmax*Rout (STRONGDAMPING, WEAKDAMPING)
+
+### Mesh parameters
+Nrad                256                       Radial number of zones
+Nsec                512                       Azimuthal number of zones (sectors)
+Rmin                0.4                       Inner boundary radius
+Rmax                2.5                       Outer boundary radius
+RadialSpacing       LOGARITHMIC               Cell spacing, choose: ARITHMETIC or LOGARITHMIC
+
+### Output control parameters
+Ntot                800000                    Total number of time steps
+Ninterm             2000                      Time steps between outputs
+DT                  0.31400230946342198       Time step length. 2PI = 1 orbit at r=1 assuming 1e-3 mass planet
+OutputDir           ./                        Outpur path
+WriteDensity        YES                       send output of gas density field
+WriteVelocity       YES                       send output of gas velocitiy fields
+WriteEnergy         YES                       send output of gas energy field
+WritePotential      YES                       send output of gas's and dust gravitationa potential filed 
+
+### Static dead zone
+#ViscModR1           0                         Inner radius of dead zone
+#ViscModDeltaR1      0                         Width of viscosity transition at the inner radius
+#ViscModR2           0                         Outer radius of dead zone
+#ViscModDeltaR2      0                         Width of viscosity transition at the outer radius
+#ViscMod             0                         Multiplication factor for alpha inside the dead region
+
+### Adaptive viscosity
+AdaptiveViscosity   YES                       Alpha viscosity calcuated based on density
+AlphaViscosityDead  0.00001                   Alpha value for MRI dead region
+AlphaSmooth         1                         Alpha smoothing lenght (in units of local scaleheights)
+AlphaSigmaThresh    6.46971e-05               Sigma threshold which below the disk is dead
+
+### Dust transport
+#DustGrid            YES                       Model dust as pressureless fluid
+#DustSelfGravity     YES                       Calcuate dust self-gravity too
+#DustSizeBin         1e-33,0.1,1e33            Dust size bins (in units of cm)
+#DustMassBin         0.01,0.01,0.01            Dust mass in bins (in units of total gas mass)
+

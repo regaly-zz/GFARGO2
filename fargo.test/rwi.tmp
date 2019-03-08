@@ -1,0 +1,108 @@
+###-----------------------------------------------------------------------------------------------------------------------------------
+### Template parameter file for GFARGO2
+###
+### Written by Zs. Regaly, 2018
+###-----------------------------------------------------------------------------------------------------------------------------------
+
+SimName             DustTest                  Name of the simulation
+
+### Gas density
+###-----------------------------------------------------------------------------------------------------------------------------------
+Sigma0              3.38e-5                   Surface density at r=1
+SigmaSlope          1.0                       Slope of surface density profile (Sigma~r^-SigmaSlope)
+SigmaCutoffRadIn    0                         Inner density cutoff radius
+SigmaCutoffRadOut   0                         Outer density cutoff radiuse
+SelfGravity         NO                        Calculate disk selfgravity (YES/NO)
+DensityFloor        1e-15                     Density can not go below this value
+ZeroVelRad          NO
+
+### Dust density
+###-----------------------------------------------------------------------------------------------------------------------------------
+DustGrid            NO                        Model dust as pressureless fluid (YES/NO)
+#DustGrowth          NO                        Calculate dust growth, requres 2 dust bins, first is the grown dust (YES/NOW)
+#DustConstStokes     NO                        Calcuate dust self-gravity too
+#DustSizeBin         1e-1                      Dust size bins (in units of cm)
+#DustMassBin         0.01                      Dust mass in bins (in units of total gas mass)
+#DustSelfGravity     NO                        Calculate dust self-gravity (YES/NO)
+#DustFeedBack        NO                        Calculate dust feedback (YES/NO)
+#MassUnit            1.0                       Mass unit, required for drag force clculation (mass of central star in solar Mass!)
+
+### Disk viscosity
+###-----------------------------------------------------------------------------------------------------------------------------------
+#Viscosity          1e-5                      Uniform kinematic viscosity
+AlphaViscosity      1e-4                      Shakura & Sunyaev alpha viscosity in MRI active region
+AdaptiveViscosity   NO                        Calculate density dependent alpha viscosity (YES/NO)
+$AlphaViscosityDead  1e-4                      Shakura & Sunyaev alpha viscosity in MRI inactive region
+$AlphaSmooth         5.0                       Alpha smoothing for adaptive viscosity
+$AlphaSigmaThresh    1e-6                      Sigma threshold value for changing alpha from accretionally active to dead
+
+### Static dead zone
+###-----------------------------------------------------------------------------------------------------------------------------------
+DeadZone            YES                       Create static dead zone prescription
+DeadZoneRin         0                         Inner radius of dead zone
+DeadZoneDeltaRIn    0                         Width of viscosity transition at inner radius
+DeadZoneRout        24                        Outer radius of dead zone
+DeadZoneDeltaROut   0.78                      Width of viscosity transition at outer radius
+DeadZoneAlpha       1e-4                      Viscosity at dead zone 
+
+
+### Disk thermodynamics
+###-----------------------------------------------------------------------------------------------------------------------------------
+AspectRatio         0.05                      Thickness over radius eq. 1 in the disc
+FlaringIndex        0                         Flaring index of the disk
+Adiabatic           YES                       Calculate energy (YES/NO)
+AdiabaticIndex      1.4                       Adiabatic index (cp/cv)
+Cooling             YES                       Calculate cooling (YES/NO)
+CoolingTime0        6.2831855e1                 Beta cooling parameter (i.e, cooling time at r=1)
+ViscHeating         YES                       Viscous heating term (YES/NO)
+
+### Planet parameters
+###-----------------------------------------------------------------------------------------------------------------------------------
+ExcludeHill         NO                        Exclude torque of material inside planetary Hill sphere (chhose: NONE, GAUSSIAN, HEAVISIDE)
+ThicknessSmoothing  0.6                       Smoothing parameters in disk thickness
+#RocheSmoothing     0.6                       Smoothing parameters in Roche radius
+PlanetConfig        ./planets.cfg             Planetary initialization file
+MassTaper           0                         Mass taper of planet(s) in orbital timescale at 1
+
+
+### Numerical method 
+###-----------------------------------------------------------------------------------------------------------------------------------
+CFL                 0.5                       Courant-Friedrich-Levi security number
+Disk                YES                       Calculate disk
+IndirectTerm        YES                       Take into account the indirect potential
+Transport           FARGO                     choose: FARGO or STANDARD
+OmegaFrame          0                         Constant frame rotation
+Frame               FIXED                     choose: COROTATING or FIXED
+
+
+### Mesh parameters
+###-----------------------------------------------------------------------------------------------------------------------------------
+Nrad                256                       Radial number of zones
+Nsec                512                       Azimuthal number of zones (sectors)
+Rmin                3                       Inner boundary radius
+Rmax                50                       Outer boundary radius
+RadialSpacing       LOGARITHMIC               Cell spacing (ARITHMETIC or LOGARITHMIC)
+
+
+### Boundary conditions 
+###-----------------------------------------------------------------------------------------------------------------------------------
+InnerBoundary       STRONGDAMPING             choose: OPEN, CLOSED, RIGID, NONREFLECTING, DAMPING, STRONGDAMPING, VISCOUTFLOW
+OuterBoundary       OPEN                      choose: OPEN, CLOSED, RIGID, NONREFLECTING, DAMPING, STRONGDAMPING, VISCOUTFLOW
+DampRmin            1.2                      Damping inner radius is DampRmin*Rin  (effective for DAMPING and STRONGDAMPING)
+DampRmax            0.9                      Damping outer radius is DampRmax*Rout (effective for DAMPING and STRONGDAMPING)
+
+
+### Output control parameters
+###-----------------------------------------------------------------------------------------------------------------------------------
+Ntot                2000000                   Total number of time steps
+Ninterm             2000                      Time steps between outputs
+DT                  0.314159                  Time step length (2PI = 1 orbit at 1)
+OutputDir           ./                        Output directory
+WriteDensity        YES                       Create snapshot of gas density field
+WriteVelocity       YES                       Create snapshot of gas velocitiy fields
+WriteEnergy         YES                       Create snapshot of gas energy field
+WritePotential      NO                        Create snapshot of gas's and dust gravitationa potential filed 
+WriteTemp           YES                       Create snapshot of gas's temperature field (only for adiabatic disk)
+WriteDiskHeight     NO                        Create snapshot of gas's height (only for adiabatic disk)
+
+WINSIZE             512
